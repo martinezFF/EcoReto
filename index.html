@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECORETO | Envía fotos por WhatsApp</title>
+    <style>
+        :root {
+            --verde-oscuro: #1b5e20;
+            --verde-medio: #388e3c;
+            --verde-claro: #8bc34a;
+            --fondo: #f1f8e9;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--fondo);
+            color: var(--verde-oscuro);
+        }
+        header {
+            background: linear-gradient(135deg, var(--verde-medio), var(--verde-oscuro));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: var(--verde-oscuro);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background-color: var(--verde-medio);
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .category {
+            margin-bottom: 30px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .category h2 {
+            color: var(--verde-oscuro);
+            border-bottom: 2px solid var(--verde-claro);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .challenge-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-left: 4px solid var(--verde-medio);
+            transition: transform 0.3s;
+        }
+        .challenge-card:hover {
+            transform: translateY(-3px);
+        }
+        .challenge-card h3 {
+            margin-top: 0;
+            color: var(--verde-oscuro);
+        }
+        .points {
+            font-weight: bold;
+            color: var(--verde-medio);
+            margin: 10px 0;
+        }
+        button {
+            background-color: var(--verde-medio);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: var(--verde-oscuro);
+        }
+        /* Estilos para la cámara */
+        #camera-section {
+            display: none;
+            margin-top: 20px;
+        }
+        #camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #video {
+            width: 100%;
+            max-width: 500px;
+            background: #000;
+            border-radius: 8px;
+        }
+        #photo-preview {
+            max-width: 100%;
+            display: none;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .camera-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .camera-buttons button {
+            flex: 1;
+        }
+        #btn-take-photo {
+            background-color: #2196F3;
+        }
+        #btn-retake {
+            background-color: #f44336;
+            display: none;
+        }
+        #btn-send-whatsapp {
+            background-color: #25D366;
+            display: none;
+        }
+        #current-challenge {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            max-width: 500px;
+        }
+        .back-button {
+            background-color: #607d8b;
+            margin-bottom: 20px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌎 ECORETO</h1>
+        <p>Envía evidencias de tus retos ecológicos por WhatsApp</p>
+    </header>
+
+    <nav>
+        <a href="#reciclaje">♻️ Reciclaje</a>
+        <a href="#agua">💧 Agua</a>
+        <a href="#energia">⚡ Energía</a>
+        <a href="#biodiversidad">🦋 Biodiversidad</a>
+        <a href="#comunidad">👥 Comunidad</a>
+    </nav>
+
+    <div class="container">
+        <button class="back-button" onclick="goBack()" style="display: none;">← Volver a los retos</button>
+        
+        <div id="challenges-section">
+            <!-- Categorías de retos... (igual que en el código anterior) -->
+            <div class="category" id="reciclaje">
+                <h2>♻️ Reciclaje Creativo</h2>
+                <div class="challenge-grid">
+                    <div class="challenge-card">
+                        <h3>Botellas con propósito</h3>
+                        <p>Transforma 10 botellas plásticas en macetas o materos.</p>
+                        <div class="points">+40 puntos</div>
+                        <button onclick="startChallenge('Botellas con propósito', 40)">Tomar foto</button>
+                    </div>
+                    <!-- Más retos de reciclaje... -->
+                </div>
+            </div>
+            <!-- Más categorías... -->
+        </div>
+
+        <!-- Sección de cámara -->
+        <div id="camera-section">
+            <div id="current-challenge">
+                <h2>Tomando foto para: <span id="challenge-name"></span></h2>
+                <p><strong>Puntos:</strong> <span id="challenge-points"></span></p>
+            </div>
+            
+            <div id="camera-container">
+                <video id="video" autoplay playsinline></video>
+                <img id="photo-preview" alt="Tu foto aparecerá aquí">
+                <div class="loading" id="loading">Preparando envío...</div>
+                <div class="camera-buttons">
+                    <button id="btn-take-photo" onclick="takePhoto()">📸 Tomar foto</button>
+                    <button id="btn-retake" onclick="retakePhoto()">🔄 Volver a tomar</button>
+                    <button id="btn-send-whatsapp" onclick="prepareWhatsAppSend()">📤 Enviar por WhatsApp</button>
+                </div>
+                <textarea id="message" rows="3" placeholder="Añade un mensaje (ej: Cómo completaste el reto, quiénes participaron...)"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        const video = document.getElementById('video');
+        const photoPreview = document.getElementById('photo-preview');
+        const loading = document.getElementById('loading');
+        let currentStream = null;
+        let currentChallenge = null;
+        let photoDataUrl = null;
+        const whatsappNumber = "50558681919"; // Número en formato internacional
+
+        // Iniciar un reto
+        function startChallenge(name, points) {
+            currentChallenge = { name, points };
+            document.getElementById('challenge-name').textContent = name;
+            document.getElementById('challenge-points').textContent = points + ' puntos';
+            
+            document.getElementById('challenges-section').style.display = 'none';
+            document.querySelector('.back-button').style.display = 'block';
+            document.getElementById('camera-section').style.display = 'block';
+            
+            startCamera();
+        }
+
+        // Iniciar la cámara
+        function startCamera() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+
+            navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: 'environment',
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }, 
+                audio: false 
+            })
+            .then(function(stream) {
+                video.srcObject = stream;
+                currentStream = stream;
+                
+                video.style.display = 'block';
+                photoPreview.style.display = 'none';
+                document.getElementById('btn-take-photo').style.display = 'block';
+                document.getElementById('btn-retake').style.display = 'none';
+                document.getElementById('btn-send-whatsapp').style.display = 'none';
+            })
+            .catch(function(err) {
+                console.error("Error al acceder a la cámara: ", err);
+                alert("No se pudo acceder a la cámara. Por favor asegúrate de haber dado los permisos necesarios.");
+                goBack();
+            });
+        }
+
+        // Tomar foto
+        function takePhoto() {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            photoDataUrl = canvas.toDataURL('image/jpeg', 0.8); // Calidad del 80%
+            photoPreview.src = photoDataUrl;
+            
+            video.style.display = 'none';
+            photoPreview.style.display = 'block';
+            document.getElementById('btn-take-photo').style.display = 'none';
+            document.getElementById('btn-retake').style.display = 'block';
+            document.getElementById('btn-send-whatsapp').style.display = 'block';
+            
+            // Detener la cámara
+            currentStream.getTracks().forEach(track => track.stop());
+        }
+
+        // Volver a tomar la foto
+        function retakePhoto() {
+            photoDataUrl = null;
+            startCamera();
+        }
+
+        // Preparar el envío por WhatsApp
+        function prepareWhatsAppSend() {
+            if (!photoDataUrl) {
+                alert("Primero debes tomar una foto");
+                return;
+            }
+
+            loading.style.display = 'block';
+            document.getElementById('btn-send-whatsapp').disabled = true;
+            
+            // Convertir la imagen a Blob
+            fetch(photoDataUrl)
+                .then(res => res.blob())
+                .then(blob => {
+                    // Crear un objeto File para simular un archivo
+                    const file = new File([blob], "ecoreto_evidencia.jpg", { type: "image/jpeg" });
+                    sendViaWhatsApp(file);
+                })
+                .catch(err => {
+                    console.error("Error al procesar la imagen:", err);
+                    loading.style.display = 'none';
+                    document.getElementById('btn-send-whatsapp').disabled = false;
+                    alert("Hubo un error al preparar la imagen para enviar");
+                });
+        }
+
+        // Enviar por WhatsApp
+        function sendViaWhatsApp(imageFile) {
+            const message = document.getElementById('message').value || 
+                          `He completado el reto: ${currentChallenge.name}`;
+            
+            // Crear un enlace temporal para descargar la imagen
+            const url = URL.createObjectURL(imageFile);
+            
+            // Primero abrimos WhatsApp con el mensaje
+            const whatsappMessage = encodeURIComponent(
+                `*ECORETO - Reto Completado*\n\n` +
+                `🏆 *Reto:* ${currentChallenge.name}\n` +
+                `⭐ *Puntos:* ${currentChallenge.points}\n\n` +
+                `📝 *Mensaje:* ${message}\n\n` +
+                `_Por favor adjunta la foto que se descargará_`
+            );
+            
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+            const newWindow = window.open(whatsappUrl, '_blank');
+            
+            // En dispositivos móviles, mostramos instrucciones para adjuntar la foto
+            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                setTimeout(() => {
+                    alert("Por favor adjunta manualmente la foto que se descargará");
+                    
+                    // Crear enlace de descarga para la imagen
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = url;
+                    downloadLink.download = "ecoreto_evidencia.jpg";
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    
+                    // Liberar el objeto URL después de 10 segundos
+                    setTimeout(() => {
+                        URL.revokeObjectURL(url);
+                    }, 10000);
+                }, 1000);
+            }
+            
+            loading.style.display = 'none';
+            document.getElementById('btn-send-whatsapp').disabled = false;
+            
+            // Registrar el envío (en una implementación real, esto se haría en el backend)
+            puntosTotales += currentChallenge.points;
+            actualizarPuntos();
+            
+            // Volver a los retos después de 2 segundos
+            setTimeout(goBack, 2000);
+        }
+
+        // Volver a los retos
+        function goBack() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+            
+            document.getElementById('challenges-section').style.display = 'block';
+            document.querySelector('.back-button').style.display = 'none';
+            document.getElementById('camera-section').style.display = 'none';
+            document.getElementById('message').value = '';
+            photoDataUrl = null;
+        }
+
+        // Variables para el sistema de puntos
+        let puntosTotales = 0;
+        const niveles = [
+            {puntos: 0, nombre: "Novato"},
+            {puntos: 50, nombre: "Ecologista"},
+            {puntos: 150, nombre: "Guardián Verde"},
+            {puntos: 300, nombre: "Héroe del Planeta"}
+        ];
+
+        // Actualizar puntos (ejemplo)
+        function actualizarPuntos() {
+            console.log(`Puntos actuales: ${puntosTotales}`);
+            // Aquí iría la lógica para actualizar la interfaz con los puntos
+        }
+    </script>
+</body>
+</html>
