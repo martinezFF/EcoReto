@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECORETO | Envía fotos por WhatsApp</title>
+    <title>ECORETO | Envía Evidencias por WhatsApp</title>
     <style>
         :root {
             --verde-oscuro: #1b5e20;
@@ -167,13 +167,22 @@
             display: none;
             text-align: center;
             margin: 10px 0;
+            color: var(--verde-oscuro);
+            font-weight: bold;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>🌎 ECORETO</h1>
-        <p>Envía evidencias de tus retos ecológicos por WhatsApp</p>
+        <p>Envía evidencias de tus retos ecológicos al 5868 1919</p>
     </header>
 
     <nav>
@@ -188,7 +197,7 @@
         <button class="back-button" onclick="goBack()" style="display: none;">← Volver a los retos</button>
         
         <div id="challenges-section">
-            <!-- Categorías de retos... (igual que en el código anterior) -->
+            <!-- Categoría: Reciclaje -->
             <div class="category" id="reciclaje">
                 <h2>♻️ Reciclaje Creativo</h2>
                 <div class="challenge-grid">
@@ -198,10 +207,150 @@
                         <div class="points">+40 puntos</div>
                         <button onclick="startChallenge('Botellas con propósito', 40)">Tomar foto</button>
                     </div>
-                    <!-- Más retos de reciclaje... -->
+                    <div class="challenge-card">
+                        <h3>Papel cero desperdicio</h3>
+                        <p>Crea una estación de reciclaje de papel en tu aula.</p>
+                        <div class="points">+30 puntos</div>
+                        <button onclick="startChallenge('Papel cero desperdicio', 30)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Eco-ladrillos</h3>
+                        <p>Haz 3 eco-ladrillos con plásticos no reciclables.</p>
+                        <div class="points">+50 puntos</div>
+                        <button onclick="startChallenge('Eco-ladrillos', 50)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Arte con desechos</h3>
+                        <p>Crea una obra artística con materiales reciclados.</p>
+                        <div class="points">+45 puntos</div>
+                        <button onclick="startChallenge('Arte con desechos', 45)">Tomar foto</button>
+                    </div>
                 </div>
             </div>
-            <!-- Más categorías... -->
+
+            <!-- Categoría: Agua -->
+            <div class="category" id="agua">
+                <h2>💧 Guardianes del Agua</h2>
+                <div class="challenge-grid">
+                    <div class="challenge-card">
+                        <h3>Cazadores de goteras</h3>
+                        <p>Identifica y reporta 3 fugas de agua en tu escuela.</p>
+                        <div class="points">+50 puntos</div>
+                        <button onclick="startChallenge('Cazadores de goteras', 50)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Carteles ahorradores</h3>
+                        <p>Diseña y coloca carteles para ahorrar agua en baños.</p>
+                        <div class="points">+25 puntos</div>
+                        <button onclick="startChallenge('Carteles ahorradores', 25)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Sistema de reúso</h3>
+                        <p>Crea un sistema para reutilizar aguas grises.</p>
+                        <div class="points">+60 puntos</div>
+                        <button onclick="startChallenge('Sistema de reúso', 60)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Lluvia aprovechada</h3>
+                        <p>Instala un barril para recolectar agua de lluvia.</p>
+                        <div class="points">+55 puntos</div>
+                        <button onclick="startChallenge('Lluvia aprovechada', 55)">Tomar foto</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Energía -->
+            <div class="category" id="energia">
+                <h2>⚡ Energía Limpia</h2>
+                <div class="challenge-grid">
+                    <div class="challenge-card">
+                        <h3>Apagón voluntario</h3>
+                        <p>Organiza un día sin energía eléctrica en tu aula.</p>
+                        <div class="points">+60 puntos</div>
+                        <button onclick="startChallenge('Apagón voluntario', 60)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Investigadores solares</h3>
+                        <p>Investiga sobre energía solar y presenta un informe.</p>
+                        <div class="points">+80 puntos</div>
+                        <button onclick="startChallenge('Investigadores solares', 80)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Cazadores de fantasmas</h3>
+                        <p>Identifica 5 aparatos con consumo fantasma.</p>
+                        <div class="points">+40 puntos</div>
+                        <button onclick="startChallenge('Cazadores de fantasmas', 40)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Hora natural</h3>
+                        <p>Usa solo luz natural por una semana en tu aula.</p>
+                        <div class="points">+70 puntos</div>
+                        <button onclick="startChallenge('Hora natural', 70)">Tomar foto</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Biodiversidad -->
+            <div class="category" id="biodiversidad">
+                <h2>🦋 Protectores de la Vida</h2>
+                <div class="challenge-grid">
+                    <div class="challenge-card">
+                        <h3>Jardín polinizador</h3>
+                        <p>Planta flores que atraigan mariposas y abejas.</p>
+                        <div class="points">+45 puntos</div>
+                        <button onclick="startChallenge('Jardín polinizador', 45)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Hotel de insectos</h3>
+                        <p>Construye un refugio para insectos beneficiosos.</p>
+                        <div class="points">+55 puntos</div>
+                        <button onclick="startChallenge('Hotel de insectos', 55)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Observadores de aves</h3>
+                        <p>Identifica y registra 10 especies de aves locales.</p>
+                        <div class="points">+50 puntos</div>
+                        <button onclick="startChallenge('Observadores de aves', 50)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Refugio para fauna</h3>
+                        <p>Crea un espacio seguro para animales pequeños.</p>
+                        <div class="points">+65 puntos</div>
+                        <button onclick="startChallenge('Refugio para fauna', 65)">Tomar foto</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categoría: Comunidad -->
+            <div class="category" id="comunidad">
+                <h2>👥 Acción Comunitaria</h2>
+                <div class="challenge-grid">
+                    <div class="challenge-card">
+                        <h3>Eco-feria escolar</h3>
+                        <p>Organiza una feria con proyectos ecológicos.</p>
+                        <div class="points">+100 puntos</div>
+                        <button onclick="startChallenge('Eco-feria escolar', 100)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Charlas intergeneracionales</h3>
+                        <p>Invita a adultos mayores a hablar sobre ecología.</p>
+                        <div class="points">+70 puntos</div>
+                        <button onclick="startChallenge('Charlas intergeneracionales', 70)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Patrulla ecológica</h3>
+                        <p>Forma un grupo para cuidar áreas verdes.</p>
+                        <div class="points">+80 puntos</div>
+                        <button onclick="startChallenge('Patrulla ecológica', 80)">Tomar foto</button>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Mapeo comunitario</h3>
+                        <p>Identifica problemas ambientales en tu comunidad.</p>
+                        <div class="points">+60 puntos</div>
+                        <button onclick="startChallenge('Mapeo comunitario', 60)">Tomar foto</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Sección de cámara -->
@@ -215,6 +364,25 @@
                 <video id="video" autoplay playsinline></video>
                 <img id="photo-preview" alt="Tu foto aparecerá aquí">
                 <div class="loading" id="loading">Preparando envío...</div>
+                
+                <div class="instructions" id="mobile-instructions" style="display: none;">
+                    <p>📱 <strong>Instrucciones para móvil:</strong></p>
+                    <ol>
+                        <li>Se descargará automáticamente tu foto</li>
+                        <li>Se abrirá WhatsApp con el número 5868 1919</li>
+                        <li>Adjunta la foto descargada al chat</li>
+                    </ol>
+                </div>
+                
+                <div class="instructions" id="desktop-instructions" style="display: none;">
+                    <p>💻 <strong>Instrucciones para computadora:</strong></p>
+                    <ol>
+                        <li>Se descargará tu foto automáticamente</li>
+                        <li>Se abrirá WhatsApp Web</li>
+                        <li>Adjunta manualmente la foto descargada</li>
+                    </ol>
+                </div>
+                
                 <div class="camera-buttons">
                     <button id="btn-take-photo" onclick="takePhoto()">📸 Tomar foto</button>
                     <button id="btn-retake" onclick="retakePhoto()">🔄 Volver a tomar</button>
@@ -230,10 +398,13 @@
         const video = document.getElementById('video');
         const photoPreview = document.getElementById('photo-preview');
         const loading = document.getElementById('loading');
+        const mobileInstructions = document.getElementById('mobile-instructions');
+        const desktopInstructions = document.getElementById('desktop-instructions');
         let currentStream = null;
         let currentChallenge = null;
         let photoDataUrl = null;
         const whatsappNumber = "50558681919"; // Número en formato internacional
+        let puntosTotales = 0;
 
         // Iniciar un reto
         function startChallenge(name, points) {
@@ -271,6 +442,8 @@
                 document.getElementById('btn-take-photo').style.display = 'block';
                 document.getElementById('btn-retake').style.display = 'none';
                 document.getElementById('btn-send-whatsapp').style.display = 'none';
+                mobileInstructions.style.display = 'none';
+                desktopInstructions.style.display = 'none';
             })
             .catch(function(err) {
                 console.error("Error al acceder a la cámara: ", err);
@@ -287,7 +460,7 @@
             const ctx = canvas.getContext('2d');
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            photoDataUrl = canvas.toDataURL('image/jpeg', 0.8); // Calidad del 80%
+            photoDataUrl = canvas.toDataURL('image/jpeg', 0.8);
             photoPreview.src = photoDataUrl;
             
             video.style.display = 'none';
@@ -295,6 +468,13 @@
             document.getElementById('btn-take-photo').style.display = 'none';
             document.getElementById('btn-retake').style.display = 'block';
             document.getElementById('btn-send-whatsapp').style.display = 'block';
+            
+            // Mostrar instrucciones según el dispositivo
+            if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                mobileInstructions.style.display = 'block';
+            } else {
+                desktopInstructions.style.display = 'block';
+            }
             
             // Detener la cámara
             currentStream.getTracks().forEach(track => track.stop());
@@ -320,9 +500,7 @@
             fetch(photoDataUrl)
                 .then(res => res.blob())
                 .then(blob => {
-                    // Crear un objeto File para simular un archivo
-                    const file = new File([blob], "ecoreto_evidencia.jpg", { type: "image/jpeg" });
-                    sendViaWhatsApp(file);
+                    sendViaWhatsApp(blob);
                 })
                 .catch(err => {
                     console.error("Error al procesar la imagen:", err);
@@ -333,54 +511,64 @@
         }
 
         // Enviar por WhatsApp
-        function sendViaWhatsApp(imageFile) {
+        function sendViaWhatsApp(imageBlob) {
             const message = document.getElementById('message').value || 
                           `He completado el reto: ${currentChallenge.name}`;
             
-            // Crear un enlace temporal para descargar la imagen
-            const url = URL.createObjectURL(imageFile);
+            // Crear objeto File para la imagen
+            const imageFile = new File([imageBlob], "ecoreto_evidencia.jpg", { type: "image/jpeg" });
             
-            // Primero abrimos WhatsApp con el mensaje
+            // Crear URL para la imagen
+            const imageUrl = URL.createObjectURL(imageFile);
+            
+            // Crear enlace de descarga
+            const downloadLink = document.createElement('a');
+            downloadLink.href = imageUrl;
+            downloadLink.download = "ecoreto_evidencia.jpg";
+            
+            // Mensaje para WhatsApp
             const whatsappMessage = encodeURIComponent(
                 `*ECORETO - Reto Completado*\n\n` +
                 `🏆 *Reto:* ${currentChallenge.name}\n` +
                 `⭐ *Puntos:* ${currentChallenge.points}\n\n` +
                 `📝 *Mensaje:* ${message}\n\n` +
-                `_Por favor adjunta la foto que se descargará_`
+                `_Adjunta la foto que se descargará_`
             );
             
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-            const newWindow = window.open(whatsappUrl, '_blank');
+            // Descargar la imagen
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
             
-            // En dispositivos móviles, mostramos instrucciones para adjuntar la foto
-            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            // Abrir WhatsApp después de un breve retraso
+            setTimeout(() => {
+                if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                    // Para móviles: abrir la app nativa
+                    window.open(`whatsapp://send?phone=${whatsappNumber}&text=${whatsappMessage}`, '_blank');
+                } else {
+                    // Para desktop: abrir WhatsApp Web
+                    window.open(`https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${whatsappMessage}`, '_blank');
+                }
+                
+                // Liberar memoria después de 10 segundos
                 setTimeout(() => {
-                    alert("Por favor adjunta manualmente la foto que se descargará");
-                    
-                    // Crear enlace de descarga para la imagen
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = url;
-                    downloadLink.download = "ecoreto_evidencia.jpg";
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                    
-                    // Liberar el objeto URL después de 10 segundos
-                    setTimeout(() => {
-                        URL.revokeObjectURL(url);
-                    }, 10000);
-                }, 1000);
-            }
+                    URL.revokeObjectURL(imageUrl);
+                }, 10000);
+            }, 1000);
             
-            loading.style.display = 'none';
-            document.getElementById('btn-send-whatsapp').disabled = false;
-            
-            // Registrar el envío (en una implementación real, esto se haría en el backend)
+            // Registrar puntos
             puntosTotales += currentChallenge.points;
-            actualizarPuntos();
+            updatePoints();
             
-            // Volver a los retos después de 2 segundos
+            // Ocultar loading y volver a los retos
+            loading.style.display = 'none';
             setTimeout(goBack, 2000);
+        }
+
+        // Actualizar puntos en la interfaz
+        function updatePoints() {
+            console.log(`Puntos actuales: ${puntosTotales}`);
+            // Aquí puedes agregar lógica para mostrar los puntos en la interfaz
         }
 
         // Volver a los retos
@@ -394,21 +582,6 @@
             document.getElementById('camera-section').style.display = 'none';
             document.getElementById('message').value = '';
             photoDataUrl = null;
-        }
-
-        // Variables para el sistema de puntos
-        let puntosTotales = 0;
-        const niveles = [
-            {puntos: 0, nombre: "Novato"},
-            {puntos: 50, nombre: "Ecologista"},
-            {puntos: 150, nombre: "Guardián Verde"},
-            {puntos: 300, nombre: "Héroe del Planeta"}
-        ];
-
-        // Actualizar puntos (ejemplo)
-        function actualizarPuntos() {
-            console.log(`Puntos actuales: ${puntosTotales}`);
-            // Aquí iría la lógica para actualizar la interfaz con los puntos
         }
     </script>
 </body>
