@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECORETO | Cuentos Ecológicos</title>
+    <title>ECORETO | Biblioteca de Cuentos Ecológicos</title>
     <style>
         :root {
             --verde-oscuro: #1b5e20;
@@ -33,16 +33,23 @@
         }
         .tab-buttons {
             display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
             margin-bottom: 20px;
             justify-content: center;
         }
         .tab-button {
-            padding: 10px 20px;
+            padding: 10px 15px;
             background-color: #ddd;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
+            font-size: 0.9em;
+        }
+        .tab-button:hover {
+            background-color: #ccc;
         }
         .tab-button.active {
             background-color: var(--verde-medio);
@@ -59,6 +66,7 @@
             color: var(--verde-oscuro);
             border-bottom: 2px solid var(--verde-claro);
             padding-bottom: 10px;
+            margin-top: 0;
         }
         .story-content h3 {
             color: var(--verde-medio);
@@ -72,19 +80,31 @@
             margin-top: 25px;
             border-left: 4px solid var(--verde-medio);
         }
+        @media (max-width: 600px) {
+            .tab-buttons {
+                flex-direction: column;
+            }
+            .tab-button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>📚 ECORETO Cuentos Ecológicos</h1>
+        <h1>📚 Biblioteca de Cuentos Ecológicos ECORETO</h1>
     </header>
 
     <div class="container">
         <div class="tab-buttons">
-            <button class="tab-button active" onclick="showStory('bosque')">El Bosque de Sabana Larga</button>
-            <button class="tab-button" onclick="showStory('tortuga')">La Tortuga que salvó el océano</button>
+            <button class="tab-button active" onclick="showStory('bosque')">El Bosque</button>
+            <button class="tab-button" onclick="showStory('tortuga')">La Tortuga</button>
+            <button class="tab-button" onclick="showStory('semilla')">La Semilla</button>
+            <button class="tab-button" onclick="showStory('abeja')">La Abeja</button>
+            <button class="tab-button" onclick="showStory('rio')">El Río</button>
         </div>
         
+        <!-- Cuento 1 -->
         <div id="bosque" class="story-content">
             <h2>El Bosque de Sabana Larga</h2>
             <p>En la comunidad de Sabana Larga, cerca del Instituto Pablo José Gómez Salgado, un grupo de estudiantes descubrió algo increíble: un pequeño bosque lleno de vida que estaba en peligro.</p>
@@ -108,6 +128,7 @@
             </div>
         </div>
         
+        <!-- Cuento 2 -->
         <div id="tortuga" class="story-content" style="display: none;">
             <h2>La Tortuga que salvó el océano</h2>
             <p>Había una vez una tortuga llamada Tica que vivía en un océano cada vez más contaminado con plásticos. Un día, decidió que ya era suficiente.</p>
@@ -128,6 +149,88 @@
             
             <div class="story-moral">
                 <p>🌊 <strong>Moraleja:</strong> Cuando trabajamos juntos, hasta los problemas más grandes tienen solución.</p>
+            </div>
+        </div>
+        
+        <!-- Cuento 3 -->
+        <div id="semilla" class="story-content" style="display: none;">
+            <h2>La Semilla Viajera</h2>
+            <p>En lo alto de una montaña, una pequeña semilla de ceibo soñaba con crecer en un lugar mejor. Un día, un fuerte viento la arrancó de su rama y comenzó su viaje.</p>
+            
+            <h3>El Viaje</h3>
+            <p>La semilla voló sobre ríos y valles, pero en cada lugar que intentaba quedarse encontraba problemas:</p>
+            <ul>
+                <li>En la ciudad, el aire estaba muy contaminado</li>
+                <li>En el campo, los suelos estaban secos</li>
+                <li>En el bosque, no había suficiente luz</li>
+            </ul>
+            
+            <h3>El Lugar Perfecto</h3>
+            <p>Finalmente, la semilla llegó a un pequeño jardín escolar donde los niños cuidaban con amor las plantas. Allí encontró tierra fértil, agua limpia y mucho sol.</p>
+            
+            <h3>El Gran Árbol</h3>
+            <p>Años después, aquella semilla se convirtió en un frondoso ceibo que daba sombra a los niños y hogar a muchos pájaros.</p>
+            
+            <div class="story-moral">
+                <p>🌱 <strong>Moraleja:</strong> Con paciencia y cuidado, hasta el más pequeño puede convertirse en algo grande y hermoso.</p>
+            </div>
+        </div>
+        
+        <!-- Cuento 4 -->
+        <div id="abeja" class="story-content" style="display: none;">
+            <h2>La Abeja Curiosa</h2>
+            <p>Maya era una abeja obrera diferente a las demás. Mientras sus hermanas recolectaban néctar sin parar, ella se preguntaba por qué cada vez había menos flores.</p>
+            
+            <h3>La Investigación</h3>
+            <p>Maya comenzó a explorar más allá del jardín y descubrió:</p>
+            <ul>
+                <li>Campos donde antes había flores, ahora solo había edificios</li>
+                <li>Plantas rociadas con químicos que las hacían peligrosas</li>
+                <li>Jardines sin diversidad de flores</li>
+            </ul>
+            
+            <h3>La Solución</h3>
+            <p>Maya convenció a su colmena para que ayudara a los humanos. Les enseñaron:</p>
+            <ul>
+                <li>A plantar flores nativas</li>
+                <li>A evitar pesticidas dañinos</li>
+                <li>A crear pequeños jardines en balcones</li>
+            </ul>
+            
+            <h3>El Cambio</h3>
+            <p>Poco a poco, la ciudad se llenó de color y vida nuevamente, y las abejas ya no pasaron hambre.</p>
+            
+            <div class="story-moral">
+                <p>🐝 <strong>Moraleja:</strong> La curiosidad y la colaboración pueden resolver los problemas más difíciles.</p>
+            </div>
+        </div>
+        
+        <!-- Cuento 5 -->
+        <div id="rio" class="story-content" style="display: none;">
+            <h2>El Río que Aprendió a Hablar</h2>
+            <p>El río Chiquito siempre había sido claro y lleno de vida, pero últimamente se sentía enfermo y triste. Un día, descubrió que podía comunicarse con una niña llamada Lucía.</p>
+            
+            <h3>El Mensaje</h3>
+            <p>El río le contó a Lucía:</p>
+            <ul>
+                <li>Que las fábricas vertían químicos en sus aguas</li>
+                <li>Que la gente tiraba basura en sus orillas</li>
+                <li>Que los peces estaban desapareciendo</li>
+            </ul>
+            
+            <h3>La Acción</h3>
+            <p>Lucía reunió a sus amigos y juntos:</p>
+            <ul>
+                <li>Organizaron jornadas de limpieza</li>
+                <li>Hablaron con las fábricas para que dejaran de contaminar</li>
+                <li>Crearon un vivero de plantas nativas para proteger las orillas</li>
+            </ul>
+            
+            <h3>La Recuperación</h3>
+            <p>Con el tiempo, el río Chiquito recuperó su salud y volvió a ser el orgullo de la comunidad.</p>
+            
+            <div class="story-moral">
+                <p>💧 <strong>Moraleja:</strong> Todos tenemos voz para defender la naturaleza, solo necesitamos alguien que nos escuche.</p>
             </div>
         </div>
     </div>
