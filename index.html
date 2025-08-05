@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECORETO | Envía Evidencias por WhatsApp</title>
+    <title>ECORETO | Retos y Cuentos Ecológicos</title>
     <style>
         :root {
             --verde-oscuro: #1b5e20;
@@ -46,6 +46,12 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
         .category {
             margin-bottom: 30px;
             background-color: white;
@@ -59,12 +65,12 @@
             padding-bottom: 8px;
             margin-top: 0;
         }
-        .challenge-grid {
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 15px;
         }
-        .challenge-card {
+        .card {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -72,10 +78,10 @@
             border-left: 4px solid var(--verde-medio);
             transition: transform 0.3s;
         }
-        .challenge-card:hover {
+        .card:hover {
             transform: translateY(-3px);
         }
-        .challenge-card h3 {
+        .card h3 {
             margin-top: 0;
             color: var(--verde-oscuro);
         }
@@ -98,10 +104,6 @@
         button:hover {
             background-color: var(--verde-oscuro);
         }
-        #camera-section {
-            display: none;
-            margin-top: 20px;
-        }
         #camera-container {
             display: flex;
             flex-direction: column;
@@ -123,14 +125,14 @@
             border-radius: 8px;
             margin: 10px 0;
         }
-        .camera-buttons {
+        .button-group {
             display: flex;
             gap: 10px;
             margin-top: 10px;
             width: 100%;
             max-width: 500px;
         }
-        .camera-buttons button {
+        .button-group button {
             flex: 1;
         }
         #btn-take-photo {
@@ -177,56 +179,146 @@
             margin: 10px 0;
             font-size: 0.9em;
         }
+        .story-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .story-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .story-moral {
+            font-style: italic;
+            background-color: #f1f8e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            background-color: #ddd;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tab-button.active {
+            background-color: var(--verde-medio);
+            color: white;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>🌎 ECORETO</h1>
-        <p>Envía evidencias de tus retos ecológicos al 5868 1919</p>
+        <p>Retos ecológicos y cuentos ambientales</p>
     </header>
 
     <nav>
-        <a href="#reciclaje">♻️ Reciclaje</a>
-        <a href="#agua">💧 Agua</a>
-        <a href="#energia">⚡ Energía</a>
-        <a href="#biodiversidad">🦋 Biodiversidad</a>
-        <a href="#comunidad">👥 Comunidad</a>
+        <a href="#" onclick="showSection('retos')">♻️ Retos</a>
+        <a href="#" onclick="showSection('cuentos')">📚 Cuentos</a>
     </nav>
 
     <div class="container">
-        <button class="back-button" onclick="goBack()" style="display: none;">← Volver a los retos</button>
-        
-        <div id="challenges-section">
-            <!-- Categorías de retos se generarán con JavaScript -->
+        <!-- Sección de Retos -->
+        <div id="retos" class="section active">
+            <button class="back-button" onclick="goBack()" style="display: none;">← Volver a los retos</button>
+            
+            <div id="challenges-section">
+                <!-- Categorías de retos se generarán con JavaScript -->
+            </div>
+
+            <!-- Sección de cámara -->
+            <div id="camera-section">
+                <div id="current-challenge">
+                    <h2>Tomando foto para: <span id="challenge-name"></span></h2>
+                    <p><strong>Puntos:</strong> <span id="challenge-points"></span></p>
+                </div>
+                
+                <div id="camera-container">
+                    <video id="video" autoplay playsinline></video>
+                    <img id="photo-preview" alt="Tu foto aparecerá aquí">
+                    <div class="loading" id="loading">Preparando envío...</div>
+                    
+                    <div class="instructions" id="mobile-instructions" style="display: none;">
+                        <p>📱 <strong>Instrucciones para móvil:</strong></p>
+                        <ol>
+                            <li>Se descargará automáticamente tu foto</li>
+                            <li>Se abrirá WhatsApp con el número 5868 1919</li>
+                            <li>Adjunta la foto descargada al chat</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="btn-take-photo" onclick="takePhoto()">📸 Tomar foto</button>
+                        <button id="btn-retake" onclick="retakePhoto()">🔄 Volver a tomar</button>
+                        <button id="btn-send-whatsapp" onclick="prepareWhatsAppSend()">📤 Enviar por WhatsApp</button>
+                    </div>
+                    <textarea id="message" rows="3" placeholder="Añade un mensaje..."></textarea>
+                </div>
+            </div>
         </div>
 
-        <!-- Sección de cámara -->
-        <div id="camera-section">
-            <div id="current-challenge">
-                <h2>Tomando foto para: <span id="challenge-name"></span></h2>
-                <p><strong>Puntos:</strong> <span id="challenge-points"></span></p>
+        <!-- Sección de Cuentos -->
+        <div id="cuentos" class="section">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="showStory('bosque')">El Bosque de Sabana Larga</button>
+                <button class="tab-button" onclick="showStory('tortuga')">La Tortuga que salvó el océano</button>
             </div>
             
-            <div id="camera-container">
-                <video id="video" autoplay playsinline></video>
-                <img id="photo-preview" alt="Tu foto aparecerá aquí">
-                <div class="loading" id="loading">Preparando envío...</div>
+            <div id="bosque" class="story-content">
+                <h2>El Bosque de Sabana Larga</h2>
+                <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Bosque">
+                <p>En la comunidad de Sabana Larga, cerca del Instituto Pablo José Gómez Salgado, un grupo de estudiantes descubrió algo increíble: un pequeño bosque lleno de vida que estaba en peligro.</p>
                 
-                <div class="instructions" id="mobile-instructions" style="display: none;">
-                    <p>📱 <strong>Instrucciones para móvil:</strong></p>
-                    <ol>
-                        <li>Se descargará automáticamente tu foto</li>
-                        <li>Se abrirá WhatsApp con el número 5868 1919</li>
-                        <li>Adjunta la foto descargada al chat</li>
-                    </ol>
-                </div>
+                <h3>El Descubrimiento</h3>
+                <p>Todo comenzó cuando María, una alumna de tercer año, notó que los animales del lugar—pequeñas aves, iguanas y mariposas—ya no llegaban como antes. Preocupada, reunió a sus amigos Carlos, Luisa y Javier, y juntos decidieron investigar.</p>
                 
-                <div class="camera-buttons">
-                    <button id="btn-take-photo" onclick="takePhoto()">📸 Tomar foto</button>
-                    <button id="btn-retake" onclick="retakePhoto()">🔄 Volver a tomar</button>
-                    <button id="btn-send-whatsapp" onclick="prepareWhatsAppSend()">📤 Enviar por WhatsApp</button>
+                <h3>El Plan Ecológico</h3>
+                <p>Con la ayuda de su inspiradora profesora de Ciencias, la señora Arelis Rayo, organizaron un proyecto para salvar el bosque:</p>
+                <ul>
+                    <li><strong>Recolección de basura:</strong> Todos los estudiantes del instituto colaboraron en limpiar la zona.</li>
+                    <li><strong>Reforestación:</strong> Plantaron árboles nativos como caoba criolla y guayacán.</li>
+                    <li><strong>Concientización:</strong> Hicieron carteles creativos y visitaron las casas de Sabana Larga.</li>
+                </ul>
+                
+                <h3>La Gran Sorpresa</h3>
+                <p>Un día, mientras trabajaban, la profesora Rayo les mostró algo asombroso: un manantial escondido entre los árboles. Era una fuente de agua cristalina que alimentaba a la comunidad y a los animales.</p>
+                
+                <div class="story-moral">
+                    <p>🌍 <strong>Moraleja:</strong> Con dedicación y un buen maestro, hasta las pequeñas acciones pueden cambiar el mundo.</p>
                 </div>
-                <textarea id="message" rows="3" placeholder="Añade un mensaje..."></textarea>
+            </div>
+            
+            <div id="tortuga" class="story-content" style="display: none;">
+                <h2>La Tortuga que salvó el océano</h2>
+                <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Tortuga marina">
+                <p>Había una vez una tortuga llamada Tica que vivía en un océano cada vez más contaminado con plásticos. Un día, decidió que ya era suficiente.</p>
+                
+                <h3>La Idea Brillante</h3>
+                <p>Tica reunió a todos los animales marinos: peces, delfines, cangrejos y hasta a las temibles orcas. Juntos idearon un plan para limpiar el océano.</p>
+                
+                <h3>La Gran Limpieza</h3>
+                <p>Cada especie contribuyó según sus habilidades:</p>
+                <ul>
+                    <li>Los delfines usaron sus sonidos para localizar los plásticos</li>
+                    <li>Los cangrejos cortaron las redes abandonadas</li>
+                    <li>Los peces pequeños recolectaron los microplásticos</li>
+                </ul>
+                
+                <h3>El Resultado</h3>
+                <p>Después de meses de trabajo, el océano recuperó su belleza. Los humanos, al ver el esfuerzo de los animales, comenzaron a reducir su uso de plásticos.</p>
+                
+                <div class="story-moral">
+                    <p>🌊 <strong>Moraleja:</strong> Cuando trabajamos juntos, hasta los problemas más grandes tienen solución.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -283,6 +375,27 @@
             renderChallenges();
         });
 
+        // Mostrar sección
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Mostrar cuento
+        function showStory(storyId) {
+            document.querySelectorAll('.story-content').forEach(story => {
+                story.style.display = 'none';
+            });
+            document.getElementById(storyId).style.display = 'block';
+            
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
         // Renderizar los retos
         function renderChallenges() {
             let html = '';
@@ -291,9 +404,9 @@
                 html += `
                     <div class="category" id="${category}">
                         <h2>${getCategoryIcon(category)} ${getCategoryName(category)}</h2>
-                        <div class="challenge-grid">
+                        <div class="grid">
                             ${challenges[category].map(challenge => `
-                                <div class="challenge-card">
+                                <div class="card">
                                     <h3>${challenge.name}</h3>
                                     <p>${challenge.description}</p>
                                     <div class="points">+${challenge.points} puntos</div>
