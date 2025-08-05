@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECORETO | Biblioteca de Cuentos Ecológicos</title>
+    <title>ECORETO | Retos y Cuentos Ecológicos</title>
     <style>
         :root {
             --verde-oscuro: #1b5e20;
@@ -17,7 +17,6 @@
             padding: 0;
             background-color: var(--fondo);
             color: var(--verde-oscuro);
-            line-height: 1.6;
         }
         header {
             background: linear-gradient(135deg, var(--verde-medio), var(--verde-oscuro));
@@ -26,17 +25,184 @@
             text-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+        nav {
+            background-color: var(--verde-oscuro);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background-color: var(--verde-medio);
+        }
         .container {
             padding: 20px;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .category {
+            margin-bottom: 30px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .category h2 {
+            color: var(--verde-oscuro);
+            border-bottom: 2px solid var(--verde-claro);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-left: 4px solid var(--verde-medio);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: var(--verde-oscuro);
+        }
+        .points {
+            font-weight: bold;
+            color: var(--verde-medio);
+            margin: 10px 0;
+        }
+        button {
+            background-color: var(--verde-medio);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: var(--verde-oscuro);
+        }
+        #camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #video {
+            width: 100%;
+            max-width: 500px;
+            background: #000;
+            border-radius: 8px;
+        }
+        #photo-preview {
+            max-width: 100%;
+            display: none;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .button-group button {
+            flex: 1;
+        }
+        #btn-take-photo {
+            background-color: #2196F3;
+        }
+        #btn-retake {
+            background-color: #f44336;
+            display: none;
+        }
+        #btn-send-whatsapp {
+            background-color: #25D366;
+            display: none;
+        }
+        #current-challenge {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            max-width: 500px;
+            font-family: inherit;
+        }
+        .back-button {
+            background-color: #607d8b;
+            margin-bottom: 20px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+            color: var(--verde-oscuro);
+            font-weight: bold;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .story-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .story-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .story-moral {
+            font-style: italic;
+            background-color: #f1f8e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
         }
         .tab-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
             margin-bottom: 20px;
-            justify-content: center;
         }
         .tab-button {
             padding: 10px 15px;
@@ -55,232 +221,517 @@
             background-color: var(--verde-medio);
             color: white;
         }
-        .story-content {
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        .story-content h2 {
-            color: var(--verde-oscuro);
-            border-bottom: 2px solid var(--verde-claro);
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-        .story-content h3 {
-            color: var(--verde-medio);
-            margin-top: 25px;
-        }
-        .story-moral {
-            font-style: italic;
-            background-color: #f1f8e9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 25px;
-            border-left: 4px solid var(--verde-medio);
-        }
-        @media (max-width: 600px) {
-            .tab-buttons {
-                flex-direction: column;
-            }
-            .tab-button {
-                width: 100%;
-            }
-        }
     </style>
 </head>
 <body>
     <header>
-        <h1>📚 Biblioteca de Cuentos Ecológicos ECORETO</h1>
+        <h1>🌎 ECORETO</h1>
+        <p>Retos ecológicos y cuentos ambientales</p>
     </header>
 
+    <nav>
+        <a href="#" onclick="showSection('retos')">♻️ Retos</a>
+        <a href="#" onclick="showSection('cuentos')">📚 Cuentos</a>
+    </nav>
+
     <div class="container">
-        <div class="tab-buttons">
-            <button class="tab-button active" onclick="showStory('bosque')">El Bosque</button>
-            <button class="tab-button" onclick="showStory('tortuga')">La Tortuga</button>
-            <button class="tab-button" onclick="showStory('semilla')">La Semilla</button>
-            <button class="tab-button" onclick="showStory('abeja')">La Abeja</button>
-            <button class="tab-button" onclick="showStory('rio')">El Río</button>
-            <button class="tab-button" onclick="showStory('rio-sucio')">El Río Sucio</button>
-        </div>
-        
-        <!-- Cuento 1 -->
-        <div id="bosque" class="story-content">
-            <h2>El Bosque de Sabana Larga</h2>
-            <p>En la comunidad de Sabana Larga, cerca del Instituto Pablo José Gómez Salgado, un grupo de estudiantes descubrió algo increíble: un pequeño bosque lleno de vida que estaba en peligro.</p>
+        <!-- Sección de Retos -->
+        <div id="retos" class="section active">
+            <button class="back-button" onclick="goBack()" style="display: none;">← Volver a los retos</button>
             
-            <h3>El Descubrimiento</h3>
-            <p>Todo comenzó cuando María, una alumna de tercer año, notó que los animales del lugar—pequeñas aves, iguanas y mariposas—ya no llegaban como antes. Preocupada, reunió a sus amigos Carlos, Luisa y Javier, y juntos decidieron investigar.</p>
-            
-            <h3>El Plan Ecológico</h3>
-            <p>Con la ayuda de su inspiradora profesora de Ciencias, la señora Arelis Rayo, organizaron un proyecto para salvar el bosque:</p>
-            <ul>
-                <li><strong>Recolección de basura:</strong> Todos los estudiantes del instituto colaboraron en limpiar la zona.</li>
-                <li><strong>Reforestación:</strong> Plantaron árboles nativos como caoba criolla y guayacán.</li>
-                <li><strong>Concientización:</strong> Hicieron carteles creativos y visitaron las casas de Sabana Larga.</li>
-            </ul>
-            
-            <h3>La Gran Sorpresa</h3>
-            <p>Un día, mientras trabajaban, la profesora Rayo les mostró algo asombroso: un manantial escondido entre los árboles. Era una fuente de agua cristalina que alimentaba a la comunidad y a los animales.</p>
-            
-            <div class="story-moral">
-                <p>🌍 <strong>Moraleja:</strong> Con dedicación y un buen maestro, hasta las pequeñas acciones pueden cambiar el mundo.</p>
+            <div id="challenges-section">
+                <!-- Categorías de retos se generarán con JavaScript -->
             </div>
-        </div>
-        
-        <!-- Cuento 2 -->
-        <div id="tortuga" class="story-content" style="display: none;">
-            <h2>La Tortuga que salvó el océano</h2>
-            <p>Había una vez una tortuga llamada Tica que vivía en un océano cada vez más contaminado con plásticos. Un día, decidió que ya era suficiente.</p>
-            
-            <h3>La Idea Brillante</h3>
-            <p>Tica reunió a todos los animales marinos: peces, delfines, cangrejos y hasta a las temibles orcas. Juntos idearon un plan para limpiar el océano.</p>
-            
-            <h3>La Gran Limpieza</h3>
-            <p>Cada especie contribuyó según sus habilidades:</p>
-            <ul>
-                <li>Los delfines usaron sus sonidos para localizar los plásticos</li>
-                <li>Los cangrejos cortaron las redes abandonadas</li>
-                <li>Los peces pequeños recolectaron los microplásticos</li>
-            </ul>
-            
-            <h3>El Resultado</h3>
-            <p>Después de meses de trabajo, el océano recuperó su belleza. Los humanos, al ver el esfuerzo de los animales, comenzaron a reducir su uso de plásticos.</p>
-            
-            <div class="story-moral">
-                <p>🌊 <strong>Moraleja:</strong> Cuando trabajamos juntos, hasta los problemas más grandes tienen solución.</p>
-            </div>
-        </div>
-        
-        <!-- Cuento 3 -->
-        <div id="semilla" class="story-content" style="display: none;">
-            <h2>La Semilla Viajera</h2>
-            <p>En lo alto de una montaña, una pequeña semilla de ceibo soñaba con crecer en un lugar mejor. Un día, un fuerte viento la arrancó de su rama y comenzó su viaje.</p>
-            
-            <h3>El Viaje</h3>
-            <p>La semilla voló sobre ríos y valles, pero en cada lugar que intentaba quedarse encontraba problemas:</p>
-            <ul>
-                <li>En la ciudad, el aire estaba muy contaminado</li>
-                <li>En el campo, los suelos estaban secos</li>
-                <li>En el bosque, no había suficiente luz</li>
-            </ul>
-            
-            <h3>El Lugar Perfecto</h3>
-            <p>Finalmente, la semilla llegó a un pequeño jardín escolar donde los niños cuidaban con amor las plantas. Allí encontró tierra fértil, agua limpia y mucho sol.</p>
-            
-            <h3>El Gran Árbol</h3>
-            <p>Años después, aquella semilla se convirtió en un frondoso ceibo que daba sombra a los niños y hogar a muchos pájaros.</p>
-            
-            <div class="story-moral">
-                <p>🌱 <strong>Moraleja:</strong> Con paciencia y cuidado, hasta el más pequeño puede convertirse en algo grande y hermoso.</p>
-            </div>
-        </div>
-        
-        <!-- Cuento 4 -->
-        <div id="abeja" class="story-content" style="display: none;">
-            <h2>La Abeja Curiosa</h2>
-            <p>Maya era una abeja obrera diferente a las demás. Mientras sus hermanas recolectaban néctar sin parar, ella se preguntaba por qué cada vez había menos flores.</p>
-            
-            <h3>La Investigación</h3>
-            <p>Maya comenzó a explorar más allá del jardín y descubrió:</p>
-            <ul>
-                <li>Campos donde antes había flores, ahora solo había edificios</li>
-                <li>Plantas rociadas con químicos que las hacían peligrosas</li>
-                <li>Jardines sin diversidad de flores</li>
-            </ul>
-            
-            <h3>La Solución</h3>
-            <p>Maya convenció a su colmena para que ayudara a los humanos. Les enseñaron:</p>
-            <ul>
-                <li>A plantar flores nativas</li>
-                <li>A evitar pesticidas dañinos</li>
-                <li>A crear pequeños jardines en balcones</li>
-            </ul>
-            
-            <h3>El Cambio</h3>
-            <p>Poco a poco, la ciudad se llenó de color y vida nuevamente, y las abejas ya no pasaron hambre.</p>
-            
-            <div class="story-moral">
-                <p>🐝 <strong>Moraleja:</strong> La curiosidad y la colaboración pueden resolver los problemas más difíciles.</p>
-            </div>
-        </div>
-        
-        <!-- Cuento 5 -->
-        <div id="rio" class="story-content" style="display: none;">
-            <h2>El Río que Aprendió a Hablar</h2>
-            <p>El río Chiquito siempre había sido claro y lleno de vida, pero últimamente se sentía enfermo y triste. Un día, descubrió que podía comunicarse con una niña llamada Lucía.</p>
-            
-            <h3>El Mensaje</h3>
-            <p>El río le contó a Lucía:</p>
-            <ul>
-                <li>Que las fábricas vertían químicos en sus aguas</li>
-                <li>Que la gente tiraba basura en sus orillas</li>
-                <li>Que los peces estaban desapareciendo</li>
-            </ul>
-            
-            <h3>La Acción</h3>
-            <p>Lucía reunió a sus amigos y juntos:</p>
-            <ul>
-                <li>Organizaron jornadas de limpieza</li>
-                <li>Hablaron con las fábricas para que dejaran de contaminar</li>
-                <li>Crearon un vivero de plantas nativas para proteger las orillas</li>
-            </ul>
-            
-            <h3>La Recuperación</h3>
-            <p>Con el tiempo, el río Chiquito recuperó su salud y volvió a ser el orgullo de la comunidad.</p>
-            
-            <div class="story-moral">
-                <p>💧 <strong>Moraleja:</strong> Todos tenemos voz para defender la naturaleza, solo necesitamos alguien que nos escuche.</p>
+
+            <!-- Sección de cámara -->
+            <div id="camera-section">
+                <div id="current-challenge">
+                    <h2>Tomando foto para: <span id="challenge-name"></span></h2>
+                    <p><strong>Puntos:</strong> <span id="challenge-points"></span></p>
+                </div>
+                
+                <div id="camera-container">
+                    <video id="video" autoplay playsinline></video>
+                    <img id="photo-preview" alt="Tu foto aparecerá aquí">
+                    <div class="loading" id="loading">Preparando envío...</div>
+                    
+                    <div class="instructions" id="mobile-instructions" style="display: none;">
+                        <p>📱 <strong>Instrucciones para móvil:</strong></p>
+                        <ol>
+                            <li>Se descargará automáticamente tu foto</li>
+                            <li>Se abrirá WhatsApp con el número 5868 1919</li>
+                            <li>Adjunta la foto descargada al chat</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="btn-take-photo" onclick="takePhoto()">📸 Tomar foto</button>
+                        <button id="btn-retake" onclick="retakePhoto()">🔄 Volver a tomar</button>
+                        <button id="btn-send-whatsapp" onclick="prepareWhatsAppSend()">📤 Enviar por WhatsApp</button>
+                    </div>
+                    <textarea id="message" rows="3" placeholder="Añade un mensaje..."></textarea>
+                </div>
             </div>
         </div>
 
-        <!-- Cuento 6 - NUEVO (Río Sucio de Sabana Larga) -->
-        <div id="rio-sucio" class="story-content" style="display: none;">
-            <h2>El Río que Perdió su Voz</h2>
-            <p>En las afueras de Sabana Larga, el río <strong>Las Marías</strong> —que alguna vez fue cristalino y lleno de peces— ahora estaba cubierto de espuma gris y olía mal. Los estudiantes del Instituto <strong>Pablo José Gómez Salgado</strong> decidieron actuar.</p>
+        <!-- Sección de Cuentos -->
+        <div id="cuentos" class="section">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="showStory('bosque')">El Bosque</button>
+                <button class="tab-button" onclick="showStory('tortuga')">La Tortuga</button>
+                <button class="tab-button" onclick="showStory('semilla')">La Semilla</button>
+                <button class="tab-button" onclick="showStory('abeja')">La Abeja</button>
+                <button class="tab-button" onclick="showStory('rio')">El Río</button>
+                <button class="tab-button" onclick="showStory('rio-sucio')">Río Sucio</button>
+            </div>
             
-            <h3>El Diagnóstico</h3>
-            <p>Con la guía de la profesora <strong>Arelis Rayo</strong>, los alumnos investigaron:</p>
-            <ul>
-                <li><strong>Origen de la contaminación:</strong> Descubrieron que residuos de una pequeña fábrica y basura doméstica llegaban al río.</li>
-                <li><strong>Impacto:</strong> Los peces habían desaparecido, y los niños ya no podían bañarse allí.</li>
-                <li><strong>Causa raíz:</strong> Falta de conciencia en la comunidad sobre el manejo de desechos.</li>
-            </ul>
+            <!-- Cuento 1: El Bosque -->
+            <div id="bosque" class="story-content">
+                <h2>El Bosque de Sabana Larga</h2>
+                <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Bosque">
+                <p>En la comunidad de Sabana Larga, cerca del Instituto Pablo José Gómez Salgado, un grupo de estudiantes descubrió algo increíble: un pequeño bosque lleno de vida que estaba en peligro.</p>
+                
+                <h3>El Descubrimiento</h3>
+                <p>Todo comenzó cuando María, una alumna de tercer año, notó que los animales del lugar—pequeñas aves, iguanas y mariposas—ya no llegaban como antes. Preocupada, reunió a sus amigos Carlos, Luisa y Javier, y juntos decidieron investigar.</p>
+                
+                <h3>El Plan Ecológico</h3>
+                <p>Con la ayuda de su inspiradora profesora de Ciencias, la señora Arelis Rayo, organizaron un proyecto para salvar el bosque:</p>
+                <ul>
+                    <li><strong>Recolección de basura:</strong> Todos los estudiantes del instituto colaboraron en limpiar la zona.</li>
+                    <li><strong>Reforestación:</strong> Plantaron árboles nativos como caoba criolla y guayacán.</li>
+                    <li><strong>Concientización:</strong> Hicieron carteles creativos y visitaron las casas de Sabana Larga.</li>
+                </ul>
+                
+                <h3>La Gran Sorpresa</h3>
+                <p>Un día, mientras trabajaban, la profesora Rayo les mostró algo asombroso: un manantial escondido entre los árboles. Era una fuente de agua cristalina que alimentaba a la comunidad y a los animales.</p>
+                
+                <div class="story-moral">
+                    <p>🌍 <strong>Moraleja:</strong> Con dedicación y un buen maestro, hasta las pequeñas acciones pueden cambiar el mundo.</p>
+                </div>
+            </div>
             
-            <h3>La Campaña "Salvemos Las Marías"</h3>
-            <p>Los estudiantes organizaron:</p>
-            <ul>
-                <li><strong>Jornadas de limpieza:</strong> Recolectaron llantas, botellas y plásticos.</li>
-                <li><strong>Talleres educativos:</strong> Enseñaron a separar basura y hacer compostaje.</li>
-                <li><strong>Arte con propósito:</strong> Crearon esculturas con plástico reciclado y las exhibieron en el instituto.</li>
-            </ul>
+            <!-- Cuento 2: La Tortuga -->
+            <div id="tortuga" class="story-content" style="display: none;">
+                <h2>La Tortuga que salvó el océano</h2>
+                <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Tortuga marina">
+                <p>Había una vez una tortuga llamada Tica que vivía en un océano cada vez más contaminado con plásticos. Un día, decidió que ya era suficiente.</p>
+                
+                <h3>La Idea Brillante</h3>
+                <p>Tica reunió a todos los animales marinos: peces, delfines, cangrejos y hasta a las temibles orcas. Juntos idearon un plan para limpiar el océano.</p>
+                
+                <h3>La Gran Limpieza</h3>
+                <p>Cada especie contribuyó según sus habilidades:</p>
+                <ul>
+                    <li>Los delfines usaron sus sonidos para localizar los plásticos</li>
+                    <li>Los cangrejos cortaron las redes abandonadas</li>
+                    <li>Los peces pequeños recolectaron los microplásticos</li>
+                </ul>
+                
+                <h3>El Resultado</h3>
+                <p>Después de meses de trabajo, el océano recuperó su belleza. Los humanos, al ver el esfuerzo de los animales, comenzaron a reducir su uso de plásticos.</p>
+                
+                <div class="story-moral">
+                    <p>🌊 <strong>Moraleja:</strong> Cuando trabajamos juntos, hasta los problemas más grandes tienen solución.</p>
+                </div>
+            </div>
             
-            <h3>El Milagro</h3>
-            <p>Un día, tras meses de esfuerzo, <strong>vieron burbujas en el agua</strong>: ¡eran pequeños peces que habían regresado! La comunidad, inspirada, construyó un parque ecológico junto al río para protegerlo.</p>
+            <!-- Cuento 3: La Semilla -->
+            <div id="semilla" class="story-content" style="display: none;">
+                <h2>La Semilla Viajera</h2>
+                <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Semilla">
+                <p>En lo alto de una montaña, una pequeña semilla de ceibo soñaba con crecer en un lugar mejor. Un día, un fuerte viento la arrancó de su rama y comenzó su viaje.</p>
+                
+                <h3>El Viaje</h3>
+                <p>La semilla voló sobre ríos y valles, pero en cada lugar que intentaba quedarse encontraba problemas:</p>
+                <ul>
+                    <li>En la ciudad, el aire estaba muy contaminado</li>
+                    <li>En el campo, los suelos estaban secos</li>
+                    <li>En el bosque, no había suficiente luz</li>
+                </ul>
+                
+                <h3>El Lugar Perfecto</h3>
+                <p>Finalmente, la semilla llegó a un pequeño jardín escolar donde los niños cuidaban con amor las plantas. Allí encontró tierra fértil, agua limpia y mucho sol.</p>
+                
+                <h3>El Gran Árbol</h3>
+                <p>Años después, aquella semilla se convirtió en un frondoso ceibo que daba sombra a los niños y hogar a muchos pájaros.</p>
+                
+                <div class="story-moral">
+                    <p>🌱 <strong>Moraleja:</strong> Con paciencia y cuidado, hasta el más pequeño puede convertirse en algo grande y hermoso.</p>
+                </div>
+            </div>
             
-            <div class="story-moral">
-                <p>🌿 <strong>Moraleja:</strong> Hasta el río más contaminado puede renacer cuando una comunidad se une. <strong>¡El cambio empieza en el aula!</strong></p>
+            <!-- Cuento 4: La Abeja -->
+            <div id="abeja" class="story-content" style="display: none;">
+                <h2>La Abeja Curiosa</h2>
+                <img src="https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Abeja">
+                <p>Maya era una abeja obrera diferente a las demás. Mientras sus hermanas recolectaban néctar sin parar, ella se preguntaba por qué cada vez había menos flores.</p>
+                
+                <h3>La Investigación</h3>
+                <p>Maya comenzó a explorar más allá del jardín y descubrió:</p>
+                <ul>
+                    <li>Campos donde antes había flores, ahora solo había edificios</li>
+                    <li>Plantas rociadas con químicos que las hacían peligrosas</li>
+                    <li>Jardines sin diversidad de flores</li>
+                </ul>
+                
+                <h3>La Solución</h3>
+                <p>Maya convenció a su colmena para que ayudara a los humanos. Les enseñaron:</p>
+                <ul>
+                    <li>A plantar flores nativas</li>
+                    <li>A evitar pesticidas dañinos</li>
+                    <li>A crear pequeños jardines en balcones</li>
+                </ul>
+                
+                <h3>El Cambio</h3>
+                <p>Poco a poco, la ciudad se llenó de color y vida nuevamente, y las abejas ya no pasaron hambre.</p>
+                
+                <div class="story-moral">
+                    <p>🐝 <strong>Moraleja:</strong> La curiosidad y la colaboración pueden resolver los problemas más difíciles.</p>
+                </div>
+            </div>
+            
+            <!-- Cuento 5: El Río -->
+            <div id="rio" class="story-content" style="display: none;">
+                <h2>El Río que Aprendió a Hablar</h2>
+                <img src="https://images.unsplash.com/photo-1437482078695-73e9caa6b1e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Río">
+                <p>El río Chiquito siempre había sido claro y lleno de vida, pero últimamente se sentía enfermo y triste. Un día, descubrió que podía comunicarse con una niña llamada Lucía.</p>
+                
+                <h3>El Mensaje</h3>
+                <p>El río le contó a Lucía:</p>
+                <ul>
+                    <li>Que las fábricas vertían químicos en sus aguas</li>
+                    <li>Que la gente tiraba basura en sus orillas</li>
+                    <li>Que los peces estaban desapareciendo</li>
+                </ul>
+                
+                <h3>La Acción</h3>
+                <p>Lucía reunió a sus amigos y juntos:</p>
+                <ul>
+                    <li>Organizaron jornadas de limpieza</li>
+                    <li>Hablaron con las fábricas para que dejaran de contaminar</li>
+                    <li>Crearon un vivero de plantas nativas para proteger las orillas</li>
+                </ul>
+                
+                <h3>La Recuperación</h3>
+                <p>Con el tiempo, el río Chiquito recuperó su salud y volvió a ser el orgullo de la comunidad.</p>
+                
+                <div class="story-moral">
+                    <p>💧 <strong>Moraleja:</strong> Todos tenemos voz para defender la naturaleza, solo necesitamos alguien que nos escuche.</p>
+                </div>
+            </div>
+            
+            <!-- Cuento 6: Río Sucio -->
+            <div id="rio-sucio" class="story-content" style="display: none;">
+                <h2>El Río Sucio de Sabana Larga</h2>
+                <img src="https://images.unsplash.com/photo-1587496790123-7ec5a0db3c1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Río contaminado">
+                <p>En el corazón de <strong>Sabana Larga</strong>, el <strong>Río Sucio</strong> —llamado así por su agua turbia y mal olor— era evitado por todos. Los estudiantes del <strong>Instituto Pablo José Gómez Salgado</strong>, liderados por la profesora <strong>Arelis Rayo</strong>, decidieron transformarlo.</p>
+                
+                <h3>La Realidad Cruda</h3>
+                <p>Tras analizar el agua, descubrieron:</p>
+                <ul>
+                    <li><strong>Basura acumulada:</strong> Llantas, bolsas plásticas y desechos domésticos.</li>
+                    <li><strong>Contaminación química:</strong> Residuos de una fábrica cercana.</li>
+                    <li><strong>Pérdida de biodiversidad:</strong> Solo sobrevivían algas tóxicas.</li>
+                </ul>
+                
+                <h3>La Revolución Verde</h3>
+                <p>El instituto se organizó:</p>
+                <ul>
+                    <li><strong>"Brigada Río Limpio":</strong> Recolectaron 200 bolsas de basura en un mes.</li>
+                    <li><strong>Alianza con la fábrica:</strong> Implementaron un sistema de tratamiento de aguas residuales.</li>
+                    <li><strong>Jardines filtrantes:</strong> Plantaron <em>lirios de agua</em> y <em>juncos</em> para purificar el agua naturalmente.</li>
+                </ul>
+                
+                <h3>El Nuevo Nombre</h3>
+                <p>Un año después, la comunidad votó para renombrarlo: <strong>"Río Esperanza"</strong>. Hoy es un ejemplo de restauración ecológica en la región.</p>
+                
+                <div class="story-moral">
+                    <p>🌱 <strong>Moraleja:</strong> Ningún problema ambiental es irreversible cuando la educación y la acción se unen. <strong>¡Hasta un "Río Sucio" puede brillar de nuevo!</strong></p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Función para mostrar cuentos
+        // Datos de los retos
+        const challenges = {
+            reciclaje: [
+                { name: "Botellas con propósito", description: "Transforma 10 botellas plásticas en macetas", points: 40 },
+                { name: "Papel cero desperdicio", description: "Crea una estación de reciclaje de papel", points: 30 },
+                { name: "Eco-ladrillos", description: "Haz 3 eco-ladrillos con plásticos", points: 50 },
+                { name: "Arte con desechos", description: "Crea una obra artística reciclada", points: 45 }
+            ],
+            agua: [
+                { name: "Cazadores de goteras", description: "Identifica 3 fugas de agua", points: 50 },
+                { name: "Carteles ahorradores", description: "Diseña carteles para ahorrar agua", points: 25 },
+                { name: "Sistema de reúso", description: "Crea sistema para aguas grises", points: 60 },
+                { name: "Lluvia aprovechada", description: "Instala barril recolector", points: 55 }
+            ],
+            energia: [
+                { name: "Apagón voluntario", description: "Día sin energía en tu aula", points: 60 },
+                { name: "Investigadores solares", description: "Investiga sobre energía solar", points: 80 },
+                { name: "Cazadores de fantasmas", description: "Identifica 5 aparatos con consumo fantasma", points: 40 },
+                { name: "Hora natural", description: "Usa solo luz natural por una semana", points: 70 }
+            ],
+            biodiversidad: [
+                { name: "Jardín polinizador", description: "Planta flores para mariposas y abejas", points: 45 },
+                { name: "Hotel de insectos", description: "Construye refugio para insectos", points: 55 },
+                { name: "Observadores de aves", description: "Identifica 10 especies de aves", points: 50 },
+                { name: "Refugio para fauna", description: "Crea espacio para animales pequeños", points: 65 }
+            ],
+            comunidad: [
+                { name: "Eco-feria escolar", description: "Organiza feria ecológica", points: 100 },
+                { name: "Charlas intergeneracionales", description: "Invita adultos a hablar de ecología", points: 70 },
+                { name: "Patrulla ecológica", description: "Forma grupo para cuidar áreas verdes", points: 80 },
+                { name: "Mapeo comunitario", description: "Identifica problemas ambientales", points: 60 }
+            ]
+        };
+
+        // Variables globales
+        const video = document.getElementById('video');
+        const photoPreview = document.getElementById('photo-preview');
+        const loading = document.getElementById('loading');
+        const mobileInstructions = document.getElementById('mobile-instructions');
+        const challengesSection = document.getElementById('challenges-section');
+        let currentStream = null;
+        let currentChallenge = null;
+        let photoDataUrl = null;
+        const whatsappNumber = "50558681919";
+        let puntosTotales = 0;
+
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            renderChallenges();
+        });
+
+        // Mostrar sección
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // Mostrar cuento
         function showStory(storyId) {
-            // Ocultar todos los cuentos
             document.querySelectorAll('.story-content').forEach(story => {
                 story.style.display = 'none';
             });
-            
-            // Mostrar el cuento seleccionado
             document.getElementById(storyId).style.display = 'block';
             
-            // Actualizar botones activos
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
             event.target.classList.add('active');
+        }
+
+        // Renderizar los retos
+        function renderChallenges() {
+            let html = '';
+            
+            for (const category in challenges) {
+                html += `
+                    <div class="category" id="${category}">
+                        <h2>${getCategoryIcon(category)} ${getCategoryName(category)}</h2>
+                        <div class="grid">
+                            ${challenges[category].map(challenge => `
+                                <div class="card">
+                                    <h3>${challenge.name}</h3>
+                                    <p>${challenge.description}</p>
+                                    <div class="points">+${challenge.points} puntos</div>
+                                    <button onclick="startChallenge('${challenge.name}', ${challenge.points})">Tomar foto</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            challengesSection.innerHTML = html;
+        }
+
+        // Obtener icono de categoría
+        function getCategoryIcon(category) {
+            const icons = {
+                reciclaje: '♻️',
+                agua: '💧',
+                energia: '⚡',
+                biodiversidad: '🦋',
+                comunidad: '👥'
+            };
+            return icons[category] || '🌱';
+        }
+
+        // Obtener nombre de categoría
+        function getCategoryName(category) {
+            const names = {
+                reciclaje: 'Reciclaje Creativo',
+                agua: 'Guardianes del Agua',
+                energia: 'Energía Limpia',
+                biodiversidad: 'Protectores de la Vida',
+                comunidad: 'Acción Comunitaria'
+            };
+            return names[category] || category;
+        }
+
+        // Iniciar un reto
+        function startChallenge(name, points) {
+            currentChallenge = { name, points };
+            document.getElementById('challenge-name').textContent = name;
+            document.getElementById('challenge-points').textContent = points + ' puntos';
+            
+            challengesSection.style.display = 'none';
+            document.querySelector('.back-button').style.display = 'block';
+            document.getElementById('camera-section').style.display = 'block';
+            
+            startCamera();
+        }
+
+        // Iniciar la cámara
+        function startCamera() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+
+            navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: 'environment',
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }, 
+                audio: false 
+            })
+            .then(function(stream) {
+                video.srcObject = stream;
+                currentStream = stream;
+                
+                video.style.display = 'block';
+                photoPreview.style.display = 'none';
+                document.getElementById('btn-take-photo').style.display = 'block';
+                document.getElementById('btn-retake').style.display = 'none';
+                document.getElementById('btn-send-whatsapp').style.display = 'none';
+                mobileInstructions.style.display = 'none';
+            })
+            .catch(function(err) {
+                console.error("Error al acceder a la cámara: ", err);
+                alert("No se pudo acceder a la cámara. Por favor asegúrate de haber dado los permisos necesarios.");
+                goBack();
+            });
+        }
+
+        // Tomar foto
+        function takePhoto() {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            photoDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+            photoPreview.src = photoDataUrl;
+            
+            video.style.display = 'none';
+            photoPreview.style.display = 'block';
+            document.getElementById('btn-take-photo').style.display = 'none';
+            document.getElementById('btn-retake').style.display = 'block';
+            document.getElementById('btn-send-whatsapp').style.display = 'block';
+            
+            if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                mobileInstructions.style.display = 'block';
+            }
+            
+            currentStream.getTracks().forEach(track => track.stop());
+        }
+
+        // Volver a tomar la foto
+        function retakePhoto() {
+            photoDataUrl = null;
+            startCamera();
+        }
+
+        // Preparar el envío por WhatsApp
+        function prepareWhatsAppSend() {
+            if (!photoDataUrl) {
+                alert("Primero debes tomar una foto");
+                return;
+            }
+
+            loading.style.display = 'block';
+            document.getElementById('btn-send-whatsapp').disabled = true;
+            
+            fetch(photoDataUrl)
+                .then(res => res.blob())
+                .then(blob => {
+                    sendViaWhatsApp(blob);
+                })
+                .catch(err => {
+                    console.error("Error al procesar la imagen:", err);
+                    loading.style.display = 'none';
+                    document.getElementById('btn-send-whatsapp').disabled = false;
+                    alert("Hubo un error al preparar la imagen para enviar");
+                });
+        }
+
+        // Enviar por WhatsApp
+        function sendViaWhatsApp(imageBlob) {
+            const message = document.getElementById('message').value || 
+                          `Evidencia del reto: ${currentChallenge.name}`;
+            
+            const imageFile = new File([imageBlob], "ecoreto_evidencia.jpg", { type: "image/jpeg" });
+            const imageUrl = URL.createObjectURL(imageFile);
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = imageUrl;
+            downloadLink.download = "ecoreto_evidencia.jpg";
+            
+            const whatsappMessage = encodeURIComponent(
+                `*ECORETO - Reto Completado*\n\n` +
+                `🏆 *Reto:* ${currentChallenge.name}\n` +
+                `⭐ *Puntos:* ${currentChallenge.points}\n\n` +
+                `📝 *Mensaje:* ${message}\n\n` +
+                `_Adjunta la foto que se descargará_`
+            );
+            
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            
+            setTimeout(() => {
+                if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                    window.open(`whatsapp://send?phone=${whatsappNumber}&text=${whatsappMessage}`, '_blank');
+                } else {
+                    window.open(`https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${whatsappMessage}`, '_blank');
+                }
+                
+                setTimeout(() => {
+                    URL.revokeObjectURL(imageUrl);
+                }, 10000);
+            }, 1000);
+            
+            puntosTotales += currentChallenge.points;
+            updatePoints();
+            
+            loading.style.display = 'none';
+            setTimeout(goBack, 2000);
+        }
+
+        // Actualizar puntos
+        function updatePoints() {
+            console.log(`Puntos actuales: ${puntosTotales}`);
+            // Aquí puedes implementar la lógica para mostrar los puntos
+        }
+
+        // Volver a los retos
+        function goBack() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+            
+            challengesSection.style.display = 'block';
+            document.querySelector('.back-button').style.display = 'none';
+            document.getElementById('camera-section').style.display = 'none';
+            document.getElementById('message').value = '';
+            photoDataUrl = null;
         }
     </script>
 </body>
